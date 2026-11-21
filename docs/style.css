@@ -180,19 +180,59 @@ body {
   position: relative;
   width: 100px;
   height: 100px;
-  cursor: grab;
+  cursor: pointer;
   transition: transform 0.1s ease-out;
 }
 
+.central-logo:hover {
+  cursor: pointer;
+}
+
 .central-logo:active {
-  cursor: grabbing;
-  transform: scale(0.95);
+  transform: scale(0.9);
 }
 
 .central-logo svg {
   width: 100%;
   height: 100%;
   display: block;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.central-logo:active svg {
+  transform: scale(0.85);
+}
+
+/* Click ripple effect */
+.central-logo::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(118, 75, 162, 0.4);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.central-logo.clicked::after {
+  animation: ripple 0.6s ease-out forwards;
+}
+
+@keyframes ripple {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+    width: 200px;
+    height: 200px;
+    opacity: 0;
+  }
 }
 
 .orbit-sphere {

@@ -1,4 +1,4 @@
-// Central logo cursor-following script
+// Central logo cursor-following script with click/tap interaction
 document.addEventListener('DOMContentLoaded', function() {
   const centralLogo = document.getElementById('centralLogo');
   const cursorFollower = document.createElement('div');
@@ -37,6 +37,39 @@ document.addEventListener('DOMContentLoaded', function() {
     mouseY = e.clientY;
     updateCursorFollower();
   });
+
+  // Click/tap interaction - add ripple effect
+  centralLogo.addEventListener('click', function(e) {
+    // Add clicked class for ripple animation
+    centralLogo.classList.add('clicked');
+    
+    // Remove after animation completes
+    setTimeout(() => {
+      centralLogo.classList.remove('clicked');
+    }, 600);
+    
+    // Optional: haptic feedback on mobile
+    if (navigator.vibrate) {
+      navigator.vibrate(10);
+    }
+  });
+
+  // Touch support for mobile
+  centralLogo.addEventListener('touchstart', function(e) {
+    e.preventDefault();
+    centralLogo.classList.add('clicked');
+  }, { passive: false });
+
+  centralLogo.addEventListener('touchend', function(e) {
+    e.preventDefault();
+    setTimeout(() => {
+      centralLogo.classList.remove('clicked');
+    }, 600);
+    
+    if (navigator.vibrate) {
+      navigator.vibrate(10);
+    }
+  }, { passive: false });
 
   // Initialize
   followLogo();
